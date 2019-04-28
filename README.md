@@ -22,30 +22,30 @@
     font-family: 'Oswald', arial;
         }
 
-  /* unvisited link */
-a:link {
-  color: blue;
+  /* unvisited link */  
+a:link {  
+  color: cyan;
 }
 
 /* visited link */
 a:visited {
-  color: green;
+  color: yellow;
 }
 
 /* mouse over link */
 a:hover {
   color: hotpink;
-}
+}  
 
 /* selected link */
 a:active {
-  color: blue;
+  color: cyan;
 }
 
     </style>
 </head> 
     <body>
-    <div class="page-center">
+    <div class="page-center"> 
     <div class="custom-form">
         <div class="container">
             <h1 class="text-center" style="font-weight: bold">Istvan Benedek</h1>

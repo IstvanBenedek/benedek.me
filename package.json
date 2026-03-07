@@ -8,10 +8,13 @@
     "check:security": "node scripts/prebuild-checks.mjs",
     "build:app": "node scripts/prebuild-checks.mjs && vite build && vite build --ssr src/entry-server.js --outDir ../.svelte-dist-ssr && node scripts/prerender.mjs",
     "build": "npm run build:app && node scripts/publish-root.mjs",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "format": "prettier --write ."
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^6.2.4",
+    "prettier": "^3.8.1",
+    "prettier-plugin-svelte": "^3.5.1",
     "svelte": "^5.53.7",
     "vite": "^7.3.1"
   }

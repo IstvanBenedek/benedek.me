@@ -30,7 +30,9 @@ const run = (label, command, args) => {
 };
 
 if (!existsSync(`${repoRoot}/package-lock.json`)) {
-  fail("package-lock.json is required for npm audit. Generate it before building.");
+  fail(
+    "package-lock.json is required for npm audit. Generate it before building.",
+  );
 }
 
 run("Checking npm advisories", "npm", ["audit", "--audit-level=high"]);

@@ -18,7 +18,8 @@
   const outcomes = [
     {
       value: "Built from scratch",
-      label: "Security functions and audit capability designed and delivered from the ground up.",
+      label:
+        "Security functions and audit capability designed and delivered from the ground up.",
       featured: true,
     },
     {
@@ -28,158 +29,154 @@
     },
     {
       value: "Built for scale",
-      label: "Automation and AI-assisted workflows designed to scale across thousands of repositories.",
+      label:
+        "Automation and AI-assisted workflows designed to scale across thousands of repositories.",
     },
   ];
   const jobEmailUserParts = ["istvan", "benedek", "job"];
   const jobEmailDomainParts = ["gmail", "com"];
 
+  let emailCopied = $state(false);
+  let mounted = $state(false);
+  let copyTimeout;
+
+  const copyEmail = (event) => {
+    event.preventDefault(); // Prevent navigation if it falls back to a link
+    const email = `${jobEmailUserParts.join(".")}@${jobEmailDomainParts.join(".")}`;
+    navigator.clipboard.writeText(email).then(() => {
+      emailCopied = true;
+      triggerHaptic("success");
+
+      if (copyTimeout) clearTimeout(copyTimeout);
+      copyTimeout = setTimeout(() => {
+        emailCopied = false;
+      }, 2000);
+    });
+  };
+
+  const visualDuration = 460;
+  const fallbackDurations = {
+    light: 12,
+    medium: 22,
+    heavy: 32,
+    success: [18, 28, 18],
+    warning: [28, 42, 28],
+    error: [36, 52, 36],
+    selection: 10,
+  };
+
+  let haptics;
+  let isSupported = false;
+
   onMount(() => {
-    const interactiveElements = Array.from(document.querySelectorAll("[data-haptic]"));
-    const releaseEvents = ["pointerup", "pointercancel", "pointerleave", "blur"];
-    const visualDuration = 460;
-    const fallbackDurations = {
-      light: 12,
-      medium: 22,
-      heavy: 32,
-      success: [18, 28, 18],
-      warning: [28, 42, 28],
-      error: [36, 52, 36],
-      selection: 10,
+    mounted = true;
+    haptics = new WebHaptics();
+    isSupported = WebHaptics.isSupported;
+    document.documentElement.dataset.haptics = isSupported
+      ? "supported"
+      : "unavailable";
+
+    const handlePageHide = () => haptics.destroy();
+    window.addEventListener("pagehide", handlePageHide, { once: true });
+
+    return () => {
+      haptics.destroy();
+      delete document.documentElement.dataset.haptics;
+      window.removeEventListener("pagehide", handlePageHide);
     };
-    const visualTimers = new WeakMap();
-    const activeTimers = new Set();
-    const cleanup = [];
-    const haptics = new WebHaptics();
-    const canTriggerVibration =
-      () => !("userActivation" in navigator) || navigator.userActivation?.isActive;
+  });
 
-    let triggerHaptic = (type) => {
-      if (!canTriggerVibration()) {
-        return;
-      }
+  const canTriggerVibration = () =>
+    !("userActivation" in navigator) || navigator.userActivation?.isActive;
 
+  const triggerHaptic = (type) => {
+    if (!canTriggerVibration()) return;
+    if (isSupported && haptics) {
+      haptics.trigger(type);
+    } else if (navigator.vibrate) {
       const pattern = fallbackDurations[type] ?? fallbackDurations.medium;
-      if (navigator.vibrate) {
-        navigator.vibrate(pattern);
-      }
-    };
+      navigator.vibrate(pattern);
+    }
+  };
 
-    const ensurePressVisual = (element) => {
+  const hapticInteraction = (element, type = "medium") => {
+    let visualTimer;
+
+    const ensurePressVisual = () => {
       let visual = element.querySelector(".press-visual");
-
       if (!visual) {
         visual = document.createElement("span");
         visual.className = "press-visual";
         visual.setAttribute("aria-hidden", "true");
         element.append(visual);
       }
-
       return visual;
     };
 
-    const setPressOrigin = (element, clientX, clientY) => {
+    const setPressOrigin = (clientX, clientY) => {
       const rect = element.getBoundingClientRect();
       const x = clientX == null ? rect.width / 2 : clientX - rect.left;
       const y = clientY == null ? rect.height / 2 : clientY - rect.top;
-
       element.style.setProperty("--press-x", `${x}px`);
       element.style.setProperty("--press-y", `${y}px`);
     };
 
-    const playPressVisual = (element, clientX, clientY) => {
-      ensurePressVisual(element);
-      setPressOrigin(element, clientX, clientY);
+    const playPressVisual = (clientX, clientY) => {
+      ensurePressVisual();
+      setPressOrigin(clientX, clientY);
       element.classList.remove("is-firing");
       void element.offsetWidth;
       element.classList.add("is-firing");
 
-      const existingTimer = visualTimers.get(element);
-      if (existingTimer) {
-        window.clearTimeout(existingTimer);
-        activeTimers.delete(existingTimer);
-      }
+      if (visualTimer) window.clearTimeout(visualTimer);
 
-      const timer = window.setTimeout(() => {
+      visualTimer = window.setTimeout(() => {
         element.classList.remove("is-firing");
-        visualTimers.delete(element);
-        activeTimers.delete(timer);
       }, visualDuration);
-
-      visualTimers.set(element, timer);
-      activeTimers.add(timer);
     };
 
-    const fireHaptic = (element) => {
-      const type = element.dataset.haptic || "medium";
+    const handlePointerDown = (event) => {
+      if (event.pointerType === "mouse" && event.button !== 0) return;
+      element.classList.add("is-pressed");
+      playPressVisual(event.clientX, event.clientY);
       triggerHaptic(type);
     };
 
-    const addListener = (element, eventName, handler) => {
-      element.addEventListener(eventName, handler);
-      cleanup.push(() => element.removeEventListener(eventName, handler));
+    const handleRelease = () => {
+      element.classList.remove("is-pressed");
     };
 
-    const isSupported = WebHaptics.isSupported;
-    document.documentElement.dataset.haptics = isSupported ? "supported" : "unavailable";
-
-    if (isSupported) {
-      triggerHaptic = (type) => {
-        if (!canTriggerVibration()) {
-          return;
-        }
-
-        void haptics.trigger(type);
-      };
-    }
-
-    for (const element of interactiveElements) {
-      ensurePressVisual(element);
-
-      addListener(element, "pointerdown", (event) => {
-        if (event.pointerType === "mouse" && event.button !== 0) {
-          return;
-        }
-
-        element.classList.add("is-pressed");
-        playPressVisual(element, event.clientX, event.clientY);
-        fireHaptic(element);
-      });
-
-      for (const eventName of releaseEvents) {
-        addListener(element, eventName, () => {
-          element.classList.remove("is-pressed");
-        });
+    const handleKeyDown = (event) => {
+      if ((event.key === "Enter" || event.key === " ") && !event.repeat) {
+        playPressVisual();
+        triggerHaptic(type);
       }
-
-      addListener(element, "keydown", (event) => {
-        if ((event.key === "Enter" || event.key === " ") && !event.repeat) {
-          playPressVisual(element);
-          fireHaptic(element);
-        }
-      });
-    }
-
-    const handlePageHide = () => {
-      haptics.destroy();
     };
 
-    window.addEventListener("pagehide", handlePageHide, { once: true });
+    ensurePressVisual();
 
-    return () => {
-      for (const dispose of cleanup) {
-        dispose();
-      }
+    element.addEventListener("pointerdown", handlePointerDown);
+    element.addEventListener("pointerup", handleRelease);
+    element.addEventListener("pointercancel", handleRelease);
+    element.addEventListener("pointerleave", handleRelease);
+    element.addEventListener("blur", handleRelease);
+    element.addEventListener("keydown", handleKeyDown);
 
-      for (const timer of activeTimers) {
-        window.clearTimeout(timer);
-      }
-
-      haptics.destroy();
-      delete document.documentElement.dataset.haptics;
-      window.removeEventListener("pagehide", handlePageHide);
+    return {
+      update(newType) {
+        type = newType;
+      },
+      destroy() {
+        if (visualTimer) window.clearTimeout(visualTimer);
+        element.removeEventListener("pointerdown", handlePointerDown);
+        element.removeEventListener("pointerup", handleRelease);
+        element.removeEventListener("pointercancel", handleRelease);
+        element.removeEventListener("pointerleave", handleRelease);
+        element.removeEventListener("blur", handleRelease);
+        element.removeEventListener("keydown", handleKeyDown);
+      },
     };
-  });
+  };
 </script>
 
 <main class="page">
@@ -188,35 +185,44 @@
       <div class="hero-main">
         <h1>Istvan Benedek</h1>
         <p class="positioning">
-          Security leader, hands-on builder, and AI/security automation architect.
+          Security leader, hands-on builder, and AI/security automation
+          architect.
         </p>
         <p class="lede">
           I build security systems, automation, and AI-driven workflows that let
-          organizations run security work at scale instead of treating it as manual
-          overhead.
+          organizations run security work at scale instead of treating it as
+          manual overhead.
         </p>
         <div class="detail-copy">
           <p class="intro">
             I bring 26 years across software development, application security,
-            incident and crisis management, and compliance, including Level 1 PCI
-            DSS, PCI PIN, PCI MPoC, and ISO work in payment environments. I build
-            security tooling from scratch, including Kubernetes-native Rust
-            platforms and deterministic AI-assisted workflows that let secure
-            SDLC work run reliably at scale.
+            incident and crisis management, and compliance, including Level 1
+            PCI DSS, PCI PIN, PCI MPoC, and ISO work in payment environments.
+          </p>
+          <p class="intro">
+            I build security tooling from scratch, including Kubernetes-native
+            Rust platforms and deterministic AI-assisted workflows that let
+            secure SDLC work run reliably at scale.
           </p>
         </div>
       </div>
       <div class="hero-side">
         <div class="outcome-stack" aria-label="Representative scope">
-          <h2 class="capability-kicker capability-kicker-primary">Representative scope</h2>
-          <div class="outcome-grid">
+          <h2 class="capability-kicker capability-kicker-primary">
+            Representative scope
+          </h2>
+          <ul class="outcome-grid">
             {#each outcomes as point}
-            <div class:proof-card--featured={point.featured} class:proof-card--accent={point.accent} class="proof-card">
-              <p class="proof-value">{point.value}</p>
-              <p class="proof-label">{point.label}</p>
-            </div>
+              <li
+                class:proof-card--featured={point.featured}
+                class:proof-card--accent={point.accent}
+                class="proof-card"
+              >
+                <p class="proof-value">{point.value}</p>
+                <p class="proof-label">{point.label}</p>
+              </li>
             {/each}
-          </div>
+          </ul>
           <p class="scope-meta">
             <span class="scope-label">Operating scope</span>
             Built security functions, audit programs, and secure SDLC capability for
@@ -229,11 +235,11 @@
         </div>
         <div class="capability-stack" aria-label="What I do">
           <h2 class="capability-kicker">What I do</h2>
-          <div class="focus-strip" aria-label="Capabilities">
+          <ul class="focus-strip" aria-label="Capabilities">
             {#each focusAreas as area}
-              <span class="focus-pill">{area}</span>
+              <li class="focus-pill">{area}</li>
             {/each}
-          </div>
+          </ul>
         </div>
       </div>
     </section>
@@ -244,12 +250,14 @@
           <a
             class="connect-link contact-link"
             href={card.href}
-            data-haptic="medium"
+            use:hapticInteraction={"medium"}
             aria-label={card.mobileLabel}
             target="_blank"
             rel="noreferrer"
           >
-            <span class="connect-link-label connect-link-label-desktop">{card.label}</span>
+            <span class="connect-link-label connect-link-label-desktop"
+              >{card.label}</span
+            >
             <span class="connect-link-label connect-link-label-mobile">
               {card.mobileLabel}
               <span aria-hidden="true">↗</span>
@@ -258,9 +266,39 @@
         {/each}
         <span class="contact-divider" aria-hidden="true"></span>
         <div class="contact-email-item">
-          <span class="contact-email">
-            {jobEmailUserParts.join(".")} [at] {jobEmailDomainParts[0]} [dot] {jobEmailDomainParts[1]}
-          </span>
+          <button
+            class="contact-email"
+            use:hapticInteraction={"medium"}
+            onclick={copyEmail}
+            aria-label="Copy email address"
+          >
+            <span class="contact-email-label">
+              {#if emailCopied}
+                Email copied!
+              {:else if mounted}
+                {jobEmailUserParts.join(".")}@{jobEmailDomainParts.join(".")}
+                <span class="copy-icon" aria-hidden="true">
+                  <svg
+                    width="12"
+                    height="12"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    ><rect x="9" y="9" width="13" height="13" rx="2" ry="2"
+                    ></rect><path
+                      d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                    ></path></svg
+                  >
+                </span>
+              {:else}
+                {jobEmailUserParts.join(".")} [at] {jobEmailDomainParts[0]} [dot]
+                {jobEmailDomainParts[1]}
+              {/if}
+            </span>
+          </button>
         </div>
       </div>
     </section>
@@ -284,9 +322,11 @@
     --radius-md: 16px;
     --content-width: 1120px;
     --sans: "Avenir Next", "Segoe UI", "Helvetica Neue", Helvetica, sans-serif;
-    --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Baskerville,
+    --serif:
+      "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Baskerville,
       Georgia, serif;
-    --mono: "SFMono-Regular", "IBM Plex Mono", "Menlo", "Monaco", "Liberation Mono",
+    --mono:
+      "SFMono-Regular", "IBM Plex Mono", "Menlo", "Monaco", "Liberation Mono",
       monospace;
   }
 
@@ -304,8 +344,16 @@
     font-family: var(--sans);
     color: var(--text);
     background:
-      radial-gradient(circle at top left, rgba(245, 158, 11, 0.22), transparent 28%),
-      radial-gradient(circle at 85% 15%, rgba(59, 130, 246, 0.25), transparent 26%),
+      radial-gradient(
+        circle at top left,
+        rgba(245, 158, 11, 0.22),
+        transparent 28%
+      ),
+      radial-gradient(
+        circle at 85% 15%,
+        rgba(59, 130, 246, 0.25),
+        transparent 26%
+      ),
       linear-gradient(135deg, #0b1220 0%, #121826 42%, #1f2a44 100%);
   }
 
@@ -354,7 +402,11 @@
     right: -11rem;
     top: -8rem;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(255, 215, 154, 0.22), transparent 65%);
+    background: radial-gradient(
+      circle,
+      rgba(255, 215, 154, 0.22),
+      transparent 65%
+    );
   }
 
   .hero {
@@ -404,10 +456,14 @@
 
   .intro {
     max-width: 35rem;
-    margin: 0;
+    margin: 0 0 0.8rem;
     color: var(--muted);
     font-size: 1.02rem;
-    line-height: 1.58;
+    line-height: 1.62;
+  }
+
+  .intro:last-child {
+    margin-bottom: 0;
   }
 
   .lede {
@@ -447,6 +503,9 @@
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0.8rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
   }
 
   .proof-card {
@@ -464,7 +523,11 @@
     border-color: rgba(245, 158, 11, 0.2);
     background:
       linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 28%),
-      linear-gradient(135deg, rgba(245, 158, 11, 0.12), rgba(255, 255, 255, 0.04));
+      linear-gradient(
+        135deg,
+        rgba(245, 158, 11, 0.12),
+        rgba(255, 255, 255, 0.04)
+      );
     box-shadow: 0 12px 32px rgba(3, 8, 20, 0.18);
   }
 
@@ -472,7 +535,11 @@
     border-color: rgba(245, 158, 11, 0.14);
     background:
       linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 28%),
-      linear-gradient(135deg, rgba(245, 158, 11, 0.07), rgba(255, 255, 255, 0.035));
+      linear-gradient(
+        135deg,
+        rgba(245, 158, 11, 0.07),
+        rgba(255, 255, 255, 0.035)
+      );
   }
 
   .proof-value,
@@ -530,6 +597,9 @@
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0.65rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
   }
 
   .focus-pill {
@@ -626,14 +696,13 @@
     z-index: 0;
     opacity: 0;
     transform: translate(-50%, -50%) scale(0.18);
-    background:
-      radial-gradient(
-        circle,
-        rgba(255, 255, 255, 0.52) 0%,
-        rgba(255, 255, 255, 0.18) 18%,
-        rgba(255, 215, 154, 0.24) 42%,
-        rgba(245, 158, 11, 0) 72%
-      );
+    background: radial-gradient(
+      circle,
+      rgba(255, 255, 255, 0.52) 0%,
+      rgba(255, 255, 255, 0.18) 18%,
+      rgba(255, 215, 154, 0.24) 42%,
+      rgba(245, 158, 11, 0) 72%
+    );
     filter: blur(1px);
   }
 
@@ -667,11 +736,14 @@
   }
 
   .contact-email {
-    display: block;
+    display: inline-flex;
+    align-items: center;
+    position: relative;
     max-width: 100%;
-    padding: 0;
+    padding: 0.45rem 0.65rem;
+    margin: -0.45rem -0.65rem;
     border: 0;
-    border-radius: 0;
+    border-radius: 8px;
     background: transparent;
     color: rgba(255, 215, 154, 0.88);
     font-family: var(--mono);
@@ -680,6 +752,53 @@
     letter-spacing: 0.01em;
     text-align: right;
     word-break: break-word;
+    cursor: pointer;
+    touch-action: manipulation;
+    transition: color 180ms ease;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .contact-email:hover,
+  .contact-email:focus-visible {
+    color: var(--text);
+    outline: none;
+  }
+
+  .contact-email:focus-visible {
+    box-shadow: 0 0 0 2px var(--accent-soft);
+  }
+
+  :global(.contact-email.is-pressed) {
+    transform: scale(0.988);
+  }
+
+  :global(.contact-email .press-visual) {
+    width: 15rem;
+    height: 15rem;
+  }
+
+  :global(.contact-email.is-firing .press-visual) {
+    animation: press-visual 460ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .contact-email-label {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .copy-icon {
+    display: inline-flex;
+    margin-left: 0.5rem;
+    opacity: 0.6;
+    transition: opacity 180ms ease;
+  }
+
+  .contact-email:hover .copy-icon,
+  .contact-email:focus-visible .copy-icon {
+    opacity: 1;
   }
 
   @media (max-width: 900px) {
@@ -832,7 +951,11 @@
       border-radius: 16px;
       background:
         linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 30%),
-        linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(255, 255, 255, 0.04));
+        linear-gradient(
+          135deg,
+          rgba(245, 158, 11, 0.1),
+          rgba(255, 255, 255, 0.04)
+        );
       box-shadow: 0 12px 28px rgba(3, 8, 20, 0.16);
     }
 
@@ -877,7 +1000,6 @@
     .shell {
       border-radius: 24px;
     }
-
   }
 
   @media (prefers-reduced-motion: no-preference) {

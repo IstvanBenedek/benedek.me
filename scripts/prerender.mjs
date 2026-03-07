@@ -1,4 +1,11 @@
-import { existsSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
+import {
+  existsSync,
+  readdirSync,
+  readFileSync,
+  rmSync,
+  statSync,
+  writeFileSync,
+} from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
@@ -49,7 +56,10 @@ if (typeof renderApp !== "function") {
 
 const template = readFileSync(distIndexPath, "utf8");
 const appHtml = renderApp();
-const output = template.replace('<div id="app"></div>', `<div id="app">${appHtml}</div>`);
+const output = template.replace(
+  '<div id="app"></div>',
+  `<div id="app">${appHtml}</div>`,
+);
 
 writeFileSync(distIndexPath, output, "utf8");
 rmSync(ssrDir, { recursive: true, force: true });

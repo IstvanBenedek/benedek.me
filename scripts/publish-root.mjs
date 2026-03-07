@@ -17,7 +17,9 @@ const copyFileToRoot = (name) => {
 };
 
 if (!existsSync(distDir)) {
-  throw new Error("Missing build output in .svelte-dist. Run `vite build` first.");
+  throw new Error(
+    "Missing build output in .svelte-dist. Run `vite build` first.",
+  );
 }
 
 if (existsSync(rootAssetsDir)) {

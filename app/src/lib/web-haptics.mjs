@@ -202,7 +202,7 @@ function sanitizeVibrations(vibrations, fallbackIntensity) {
       delay < 0
     ) {
       throw new Error(
-        "[web-haptics] Invalid vibration values. Durations and delays must be finite non-negative numbers."
+        "[web-haptics] Invalid vibration values. Durations and delays must be finite non-negative numbers.",
       );
     }
 

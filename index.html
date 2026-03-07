@@ -1,2 +1,903 @@
-<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="description" content="Astro description"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><meta name="generator" content="Astro v4.14.5"><title>Istvan Benedek</title><style>:root{--accent: 136, 58, 234;--accent-light: 224, 204, 250;--accent-dark: 49, 10, 101;--accent-gradient: linear-gradient( 45deg, rgb(var(--accent)), rgb(var(--accent-light)) 30%, white 60% )}html{font-family:system-ui,sans-serif;background:#13151a}code{font-family:Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace}:root{--background-gradient: linear-gradient(to bottom right, #9333ea, #3b82f6)}body{margin:0;padding:0;min-height:100vh;background:var(--background-gradient);color:#fff}main[data-astro-cid-j7pv25f6]{margin:auto;padding:1rem;width:800px;max-width:calc(100% - 2rem);font-size:20px;line-height:1.6}.name[data-astro-cid-j7pv25f6]{font-size:2.5rem;font-weight:500;text-align:center;margin-bottom:2em;color:var(--accent-light)}.message[data-astro-cid-j7pv25f6]{text-align:center;margin-top:-1em;margin-bottom:5em}.x-button[data-astro-cid-j7pv25f6],.linkedin-button[data-astro-cid-j7pv25f6],.instagram-button[data-astro-cid-j7pv25f6]{display:block;width:fit-content;margin:1.5em auto;text-decoration:none;border-radius:4px;font-weight:700}.x-button[data-astro-cid-j7pv25f6]{padding:.75rem 1.5rem;background-color:#000;color:#fff;border-radius:9999px;transition:background-color .3s;box-shadow:0 4px 6px -1px #0000001a,0 2px 4px -1px #0000000f;display:flex;align-items:center;justify-content:center}.x-button[data-astro-cid-j7pv25f6]:hover{background-color:#1a1a1a}.linkedin-button[data-astro-cid-j7pv25f6]{padding:.75rem 1.5rem;background-color:#2563eb;color:#fff;border-radius:9999px;transition:background-color .3s;box-shadow:0 4px 6px -1px #0000001a,0 2px 4px -1px #0000000f}.linkedin-button[data-astro-cid-j7pv25f6]:hover{background-color:#1d4ed8}.instagram-button[data-astro-cid-j7pv25f6]{padding:.75rem 1.5rem;background-image:linear-gradient(to right,#9333ea,#d53f8c,#f97316);color:#fff;border-radius:9999px;transition:background-image .3s;box-shadow:0 4px 6px -1px #0000001a,0 2px 4px -1px #0000000f}.instagram-button[data-astro-cid-j7pv25f6]:hover{background-image:linear-gradient(to right,#7e22ce,#be185d,#ea580c)}
-</style></head> <body>  <main data-astro-cid-j7pv25f6> <h2 class="name" data-astro-cid-j7pv25f6>Istvan Benedek</h2> <p class="message" data-astro-cid-j7pv25f6>Thanks for stopping by, and feel free to reach out if you&apos;d like to connect!</p> <a href="https://x.com/IstvanBenedek" class="x-button" data-astro-cid-j7pv25f6>Follow on X</a> <a href="https://www.linkedin.com/in/istvan-benedek/" class="linkedin-button" data-astro-cid-j7pv25f6>Connect on LinkedIn</a> <a href="https://www.instagram.com/istvanbenedek/" class="instagram-button" data-astro-cid-j7pv25f6>Follow on Instagram</a> </main>  </body></html> 
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="description"
+      content="A minimal home page for Istvan Benedek with direct links to social profiles."
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f3ede2" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>Istvan Benedek | Personal Site</title>
+    <style>
+      :root {
+        --bg: #121826;
+        --bg-soft: #1c2740;
+        --panel: rgba(14, 20, 33, 0.72);
+        --panel-strong: rgba(10, 15, 25, 0.82);
+        --line: rgba(255, 255, 255, 0.1);
+        --text: #f8f2e7;
+        --muted: #b8c0d4;
+        --accent: #f59e0b;
+        --accent-soft: #ffd79a;
+        --shadow: 0 32px 70px rgba(3, 8, 20, 0.34);
+        --radius-xl: 32px;
+        --radius-lg: 22px;
+        --radius-md: 16px;
+        --content-width: 1120px;
+        --sans:
+          "Avenir Next", "Segoe UI", "Helvetica Neue", Helvetica, sans-serif;
+        --serif:
+          "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Baskerville,
+          Georgia, serif;
+        --mono:
+          "SFMono-Regular", "IBM Plex Mono", "Menlo", "Monaco",
+          "Liberation Mono", monospace;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        color-scheme: dark;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: var(--sans);
+        color: var(--text);
+        background:
+          radial-gradient(circle at top left, rgba(245, 158, 11, 0.22), transparent 28%),
+          radial-gradient(circle at 85% 15%, rgba(59, 130, 246, 0.25), transparent 26%),
+          linear-gradient(135deg, #0b1220 0%, #121826 42%, #1f2a44 100%);
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        background:
+          linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+        background-size: 72px 72px;
+        mask-image: radial-gradient(circle at center, black, transparent 78%);
+        opacity: 0.35;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      a,
+      button {
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      .page {
+        width: min(calc(100% - 2rem), var(--content-width));
+        margin: 0 auto;
+        padding: 1.25rem 0 3rem;
+      }
+
+      .shell {
+        position: relative;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: calc(var(--radius-xl) + 8px);
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 22%),
+          linear-gradient(135deg, rgba(245, 158, 11, 0.08), transparent 38%),
+          var(--panel);
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(22px);
+      }
+
+      .shell::after {
+        content: "";
+        position: absolute;
+        width: 28rem;
+        height: 28rem;
+        right: -11rem;
+        top: -8rem;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(255, 215, 154, 0.22), transparent 65%);
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 1.1rem 1.25rem;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.85rem;
+        font-family: var(--mono);
+        font-size: 0.82rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      .brand-mark {
+        display: inline-grid;
+        place-items: center;
+        width: 2.25rem;
+        height: 2.25rem;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.06);
+        color: var(--accent-soft);
+      }
+
+      .status {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.55rem;
+        padding: 0.65rem 0.9rem;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+
+      html[data-haptics="supported"] .status {
+        border-color: rgba(245, 158, 11, 0.22);
+        background: rgba(245, 158, 11, 0.1);
+        color: var(--text);
+      }
+
+      .status::before {
+        content: "";
+        width: 0.6rem;
+        height: 0.6rem;
+        border-radius: 50%;
+        background: var(--accent);
+        box-shadow: 0 0 0 0.3rem rgba(245, 158, 11, 0.18);
+      }
+
+      html[data-haptics="supported"] .status::before {
+        animation: pulse 1.8s ease-in-out infinite;
+      }
+
+      .hero {
+        position: relative;
+        display: grid;
+        grid-template-columns: minmax(0, 1.3fr) minmax(18rem, 0.9fr);
+        gap: 1.5rem;
+        padding: 4.25rem 1.25rem 1.25rem;
+      }
+
+      .hero-copy {
+        padding: 0.5rem 0.25rem 0.75rem;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        padding: 0.45rem 0.8rem;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--accent-soft);
+        font-family: var(--mono);
+        font-size: 0.78rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+
+      .eyebrow::before {
+        content: "";
+        width: 0.5rem;
+        height: 0.5rem;
+        border-radius: 50%;
+        background: currentColor;
+      }
+
+      h1 {
+        margin: 1rem 0 1rem;
+        max-width: 11ch;
+        font-family: var(--serif);
+        font-size: clamp(3.5rem, 8vw, 6.6rem);
+        line-height: 0.96;
+        letter-spacing: -0.05em;
+      }
+
+      .intro {
+        max-width: 36rem;
+        margin: 0;
+        color: var(--muted);
+        font-size: 1.08rem;
+        line-height: 1.75;
+      }
+
+      .lede {
+        margin: 0 0 1rem;
+        color: var(--accent-soft);
+        font-family: var(--serif);
+        font-size: clamp(1.35rem, 2.5vw, 1.8rem);
+        line-height: 1.25;
+        letter-spacing: -0.03em;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.9rem;
+        margin-top: 2rem;
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.7rem;
+        min-height: 3.3rem;
+        padding: 0.85rem 1.2rem;
+        border-radius: 999px;
+        border: 1px solid transparent;
+        text-decoration: none;
+        font-weight: 700;
+        touch-action: manipulation;
+        transition:
+          transform 180ms ease,
+          background-color 180ms ease,
+          border-color 180ms ease,
+          box-shadow 180ms ease;
+      }
+
+      .button:hover,
+      .button:focus-visible {
+        transform: translateY(-1px);
+      }
+
+      .button.is-pressed {
+        transform: translateY(1px) scale(0.985);
+      }
+
+      .button:focus-visible,
+      .social-card:focus-visible {
+        outline: 2px solid var(--accent-soft);
+        outline-offset: 3px;
+      }
+
+      .button-primary {
+        background: linear-gradient(135deg, #ffe1ac 0%, #f59e0b 100%);
+        color: #221606;
+        box-shadow: 0 14px 32px rgba(245, 158, 11, 0.26);
+      }
+
+      .button-primary:hover,
+      .button-primary:focus-visible {
+        box-shadow: 0 18px 36px rgba(245, 158, 11, 0.32);
+      }
+
+      .button-secondary {
+        border-color: rgba(255, 255, 255, 0.15);
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--text);
+      }
+
+      .hero-panel {
+        position: relative;
+        align-self: end;
+        padding: 1.3rem;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: var(--radius-xl);
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 28%),
+          var(--panel-strong);
+      }
+
+      .hero-panel::before {
+        content: "";
+        position: absolute;
+        inset: 1rem;
+        border-radius: calc(var(--radius-xl) - 10px);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        pointer-events: none;
+      }
+
+      .panel-label {
+        margin: 0 0 0.8rem;
+        color: var(--accent-soft);
+        font-family: var(--mono);
+        font-size: 0.78rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+
+      .panel-copy {
+        margin: 0;
+        color: var(--text);
+        font-family: var(--serif);
+        font-size: 1.35rem;
+        line-height: 1.45;
+      }
+
+      .panel-copy span {
+        color: var(--accent-soft);
+      }
+
+      .panel-note {
+        margin: 1.1rem 0 0;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .links {
+        padding: 0 1.25rem 1.25rem;
+      }
+
+      .section-head {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 1rem;
+        margin: 1rem 0 1.1rem;
+      }
+
+      .section-title {
+        margin: 0;
+        font-family: var(--serif);
+        font-size: clamp(1.8rem, 4vw, 2.5rem);
+        letter-spacing: -0.04em;
+      }
+
+      .section-copy {
+        margin: 0;
+        max-width: 32rem;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .social-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1rem;
+      }
+
+      .social-card {
+        position: relative;
+        display: grid;
+        gap: 1.1rem;
+        min-height: 17rem;
+        padding: 1.3rem;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: var(--radius-lg);
+        text-decoration: none;
+        touch-action: manipulation;
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 28%),
+          rgba(255, 255, 255, 0.04);
+        transition:
+          transform 180ms ease,
+          border-color 180ms ease,
+          background-color 180ms ease;
+      }
+
+      .social-card:hover,
+      .social-card:focus-visible {
+        transform: translateY(-4px);
+        border-color: rgba(255, 255, 255, 0.2);
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.1), transparent 28%),
+          rgba(255, 255, 255, 0.06);
+      }
+
+      .social-card.is-pressed {
+        transform: translateY(-1px) scale(0.988);
+      }
+
+      .social-card::after {
+        content: "";
+        position: absolute;
+        inset: auto 1.3rem 1.2rem;
+        height: 1px;
+        background: linear-gradient(90deg, rgba(255, 255, 255, 0.24), transparent);
+      }
+
+      .social-top {
+        display: flex;
+        align-items: start;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+
+      .social-platform {
+        font-family: var(--mono);
+        font-size: 0.82rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      .social-icon {
+        display: inline-grid;
+        place-items: center;
+        width: 2.6rem;
+        height: 2.6rem;
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.08);
+        font-weight: 700;
+      }
+
+      .social-handle {
+        margin: 0;
+        font-size: 1.55rem;
+        line-height: 1.2;
+      }
+
+      .social-description {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.72;
+      }
+
+      .social-cta {
+        align-self: end;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        color: var(--accent-soft);
+        font-weight: 700;
+      }
+
+      .social-card.x .social-icon {
+        background: rgba(255, 255, 255, 0.12);
+      }
+
+      .social-card.linkedin .social-icon {
+        background: rgba(59, 130, 246, 0.22);
+      }
+
+      .social-card.instagram .social-icon {
+        background: linear-gradient(135deg, rgba(249, 115, 22, 0.28), rgba(236, 72, 153, 0.24));
+      }
+
+      .footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 1.35rem 1.25rem 1.6rem;
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+
+      .footer-note {
+        margin: 0;
+      }
+
+      .footer-mark {
+        font-family: var(--mono);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.5);
+      }
+
+      @media (max-width: 900px) {
+        .hero {
+          grid-template-columns: 1fr;
+          padding-top: 3.25rem;
+        }
+
+        h1 {
+          max-width: 100%;
+        }
+
+        .social-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .page {
+          width: min(calc(100% - 1rem), var(--content-width));
+          padding-top: 0.5rem;
+        }
+
+        body::before {
+          background-size: 48px 48px;
+          opacity: 0.2;
+        }
+
+        .shell {
+          border-radius: 28px;
+        }
+
+        .shell::after {
+          width: 19rem;
+          height: 19rem;
+          right: -8rem;
+          top: -6rem;
+        }
+
+        .nav,
+        .hero,
+        .links,
+        .footer {
+          padding-left: 1rem;
+          padding-right: 1rem;
+        }
+
+        .nav,
+        .section-head,
+        .footer {
+          align-items: start;
+          flex-direction: column;
+        }
+
+        .brand {
+          gap: 0.7rem;
+          font-size: 0.74rem;
+          letter-spacing: 0.12em;
+        }
+
+        .brand-mark {
+          width: 2rem;
+          height: 2rem;
+        }
+
+        .status {
+          padding: 0.55rem 0.8rem;
+          font-size: 0.88rem;
+        }
+
+        .hero {
+          gap: 1rem;
+          padding-top: 2.5rem;
+          padding-bottom: 1rem;
+        }
+
+        .hero-copy {
+          padding: 0;
+        }
+
+        .eyebrow {
+          font-size: 0.72rem;
+          letter-spacing: 0.12em;
+        }
+
+        h1 {
+          margin: 0.9rem 0 0.55rem;
+          font-size: clamp(2.85rem, 14vw, 4.1rem);
+          line-height: 0.94;
+        }
+
+        .lede {
+          margin-bottom: 0.85rem;
+          font-size: 1.22rem;
+        }
+
+        .intro,
+        .section-copy,
+        .panel-note,
+        .social-description {
+          font-size: 1rem;
+          line-height: 1.65;
+        }
+
+        .hero-actions {
+          flex-direction: column;
+        }
+
+        .button {
+          width: 100%;
+          min-height: 3.5rem;
+        }
+
+        .hero-panel {
+          padding: 1.05rem;
+          border-radius: 24px;
+        }
+
+        .hero-panel::before {
+          inset: 0.8rem;
+          border-radius: 16px;
+        }
+
+        .panel-copy {
+          font-size: 1.2rem;
+        }
+
+        .section-head {
+          margin-top: 0.5rem;
+        }
+
+        .section-title {
+          font-size: 2rem;
+        }
+
+        .social-grid {
+          gap: 0.85rem;
+        }
+
+        .social-card {
+          min-height: auto;
+          gap: 0.9rem;
+          padding: 1.05rem;
+          border-radius: 20px;
+        }
+
+        .social-card::after {
+          inset: auto 1.05rem 1rem;
+        }
+
+        .social-icon {
+          width: 2.4rem;
+          height: 2.4rem;
+          border-radius: 16px;
+        }
+
+        .social-handle {
+          font-size: 1.35rem;
+        }
+
+        .footer {
+          padding-top: 1rem;
+        }
+
+        .footer-note {
+          max-width: 24rem;
+        }
+      }
+
+      @media (max-width: 420px) {
+        .page {
+          width: min(calc(100% - 0.75rem), var(--content-width));
+        }
+
+        .nav,
+        .hero,
+        .links,
+        .footer {
+          padding-left: 0.85rem;
+          padding-right: 0.85rem;
+        }
+
+        .shell {
+          border-radius: 24px;
+        }
+
+        .status {
+          width: 100%;
+          justify-content: center;
+        }
+      }
+
+      @media (prefers-reduced-motion: no-preference) {
+        .hero-copy,
+        .hero-panel,
+        .social-card {
+          animation: fade-up 700ms ease backwards;
+        }
+
+        .hero-panel {
+          animation-delay: 90ms;
+        }
+
+        .social-card:nth-child(1) {
+          animation-delay: 140ms;
+        }
+
+        .social-card:nth-child(2) {
+          animation-delay: 220ms;
+        }
+
+        .social-card:nth-child(3) {
+          animation-delay: 300ms;
+        }
+
+        @keyframes fade-up {
+          from {
+            opacity: 0;
+            transform: translateY(18px);
+          }
+
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @keyframes pulse {
+          0%,
+          100% {
+            box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.18);
+          }
+
+          50% {
+            box-shadow: 0 0 0 0.4rem rgba(245, 158, 11, 0.06);
+          }
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <div class="shell">
+        <div class="nav">
+          <div class="brand">
+            <span class="brand-mark">IB</span>
+            <span>Istvan Benedek</span>
+          </div>
+          <div class="status">A few places to connect</div>
+        </div>
+
+        <section class="hero">
+          <div class="hero-copy">
+            <div class="eyebrow">Personal Site</div>
+            <h1>Istvan Benedek</h1>
+            <p class="lede">A cleaner place to say hello.</p>
+            <p class="intro">
+              Thanks for stopping by. This page stays intentionally simple:
+              one short introduction, a calm visual layer, and a few places to
+              connect if you want to keep the conversation going.
+            </p>
+            <div class="hero-actions">
+              <a
+                class="button button-primary"
+                href="https://www.linkedin.com/in/istvan-benedek/"
+                data-haptic="medium"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Connect on LinkedIn
+              </a>
+              <a
+                class="button button-secondary"
+                href="https://x.com/IstvanBenedek"
+                data-haptic="light"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Follow on X
+              </a>
+            </div>
+          </div>
+
+          <aside class="hero-panel">
+            <p class="panel-label">Small but Intentional</p>
+            <p class="panel-copy">
+              A minimal homepage can still feel <span>sharp</span>, warm, and
+              unmistakably personal.
+            </p>
+            <p class="panel-note">
+              The goal here is not to say everything. It is to make the first
+              impression feel considered, then point people to the channels that
+              already matter.
+            </p>
+          </aside>
+        </section>
+
+        <section class="links" aria-labelledby="connect-title">
+          <div class="section-head">
+            <div>
+              <h2 class="section-title" id="connect-title">Where to find me</h2>
+              <p class="section-copy">
+                Pick the platform that fits the conversation best. Professional,
+                social, or somewhere in between.
+              </p>
+            </div>
+          </div>
+
+          <div class="social-grid">
+            <a
+              class="social-card x"
+              href="https://x.com/IstvanBenedek"
+              data-haptic="selection"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <div class="social-top">
+                <span class="social-platform">X</span>
+                <span class="social-icon">X</span>
+              </div>
+              <h3 class="social-handle">@IstvanBenedek</h3>
+              <p class="social-description">
+                Quick updates, links, and the lighter side of staying online.
+              </p>
+              <span class="social-cta">Open profile <span aria-hidden="true">↗</span></span>
+            </a>
+
+            <a
+              class="social-card linkedin"
+              href="https://www.linkedin.com/in/istvan-benedek/"
+              data-haptic="selection"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <div class="social-top">
+                <span class="social-platform">LinkedIn</span>
+                <span class="social-icon">in</span>
+              </div>
+              <h3 class="social-handle">Professional profile</h3>
+              <p class="social-description">
+                The best place for work context, background, and direct outreach.
+              </p>
+              <span class="social-cta">Start there <span aria-hidden="true">↗</span></span>
+            </a>
+
+            <a
+              class="social-card instagram"
+              href="https://www.instagram.com/istvanbenedek/"
+              data-haptic="selection"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <div class="social-top">
+                <span class="social-platform">Instagram</span>
+                <span class="social-icon">IG</span>
+              </div>
+              <h3 class="social-handle">@istvanbenedek</h3>
+              <p class="social-description">
+                A more visual stream with a little more texture and personality.
+              </p>
+              <span class="social-cta">Take a look <span aria-hidden="true">↗</span></span>
+            </a>
+          </div>
+        </section>
+
+        <footer class="footer">
+          <p class="footer-note">Small footprint, a little more polish.</p>
+          <span class="footer-mark">ib</span>
+        </footer>
+      </div>
+    </main>
+    <script type="module">
+      const interactiveElements = [...document.querySelectorAll("[data-haptic]")];
+      const releaseEvents = ["pointerup", "pointercancel", "pointerleave", "blur"];
+
+      for (const element of interactiveElements) {
+        element.addEventListener("pointerdown", () => {
+          element.classList.add("is-pressed");
+        });
+
+        for (const eventName of releaseEvents) {
+          element.addEventListener(eventName, () => {
+            element.classList.remove("is-pressed");
+          });
+        }
+      }
+
+      (async () => {
+        try {
+          const { WebHaptics } = await import("https://esm.sh/web-haptics@0.0.6");
+          const haptics = new WebHaptics();
+
+          document.documentElement.dataset.haptics = WebHaptics.isSupported
+            ? "supported"
+            : "unavailable";
+
+          for (const element of interactiveElements) {
+            element.addEventListener("click", () => {
+              void haptics.trigger(element.dataset.haptic || "light");
+            });
+          }
+
+          window.addEventListener(
+            "pagehide",
+            () => {
+              haptics.destroy();
+            },
+            { once: true }
+          );
+        } catch (error) {
+          document.documentElement.dataset.haptics = "unavailable";
+          console.warn("WebHaptics failed to load.", error);
+        }
+      })();
+    </script>
+  </body>
+</html>

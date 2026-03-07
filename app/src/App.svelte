@@ -223,15 +223,6 @@
               </li>
             {/each}
           </ul>
-          <p class="scope-meta">
-            <span class="scope-label">Operating scope</span>
-            Built security functions, audit programs, and secure SDLC capability for
-            Level 1 payment environments, regulated platforms, and large engineering
-            estates.
-            <span class="scope-separator" aria-hidden="true">•</span>
-            Across Teya, Anaplan, ASOS, Paddy Power Betfair, Qualys, and MSCI Barra,
-            spanning payments, PCI, FedRAMP, cryptography, HSM, and Kubernetes.
-          </p>
         </div>
         <div class="capability-stack" aria-label="What I do">
           <h2 class="capability-kicker">What I do</h2>
@@ -241,6 +232,15 @@
             {/each}
           </ul>
         </div>
+        <p class="scope-meta">
+          <span class="scope-label">Operating scope</span>
+          Built security functions, audit programs, and secure SDLC capability for
+          Level 1 payment environments, regulated platforms, and large engineering
+          estates.
+          <span class="scope-separator" aria-hidden="true">•</span>
+          Across Teya, Anaplan, ASOS, Paddy Power Betfair, Qualys, and MSCI Barra,
+          spanning payments, PCI, FedRAMP, cryptography, HSM, and Kubernetes.
+        </p>
       </div>
     </section>
 
@@ -255,9 +255,10 @@
             target="_blank"
             rel="noreferrer"
           >
-            <span class="connect-link-label connect-link-label-desktop"
-              >{card.label}</span
-            >
+            <span class="connect-link-label connect-link-label-desktop">
+              {card.label}
+              <span aria-hidden="true">↗</span>
+            </span>
             <span class="connect-link-label connect-link-label-mobile">
               {card.mobileLabel}
               <span aria-hidden="true">↗</span>
@@ -556,10 +557,13 @@
   }
 
   .scope-meta {
-    margin: 0.55rem 0 0;
-    color: var(--muted);
-    font-size: 0.78rem;
-    line-height: 1.45;
+    max-width: 38rem;
+    margin: 0.15rem 0 0;
+    padding-top: 0.55rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    color: rgba(184, 192, 212, 0.88);
+    font-size: 0.74rem;
+    line-height: 1.5;
   }
 
   .scope-label {
@@ -618,13 +622,21 @@
     display: inline-flex;
     align-items: center;
     min-height: 2.75rem;
+    padding: 0.42rem 0.78rem 0.42rem 0.62rem;
+    border: 1px solid rgba(245, 158, 11, 0.16);
+    border-radius: 999px;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent 34%),
+      linear-gradient(135deg, rgba(245, 158, 11, 0.08), rgba(255, 255, 255, 0.02));
     text-decoration: none;
     color: inherit;
     overflow: hidden;
     isolation: isolate;
     transition:
       transform 180ms ease,
-      color 180ms ease;
+      color 180ms ease,
+      border-color 180ms ease,
+      box-shadow 180ms ease;
   }
 
   .contact-link:focus-visible {
@@ -648,6 +660,8 @@
   .connect-link:focus-visible {
     transform: translateY(-1px);
     color: var(--text);
+    border-color: rgba(245, 158, 11, 0.28);
+    box-shadow: 0 10px 22px rgba(3, 8, 20, 0.12);
   }
 
   :global(.connect-link.is-pressed) {
@@ -702,6 +716,12 @@
   .connect-link-label {
     position: relative;
     z-index: 1;
+  }
+
+  .connect-link-label-desktop {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.38rem;
   }
 
   .connect-link-label-mobile {
@@ -903,6 +923,15 @@
 
     .scope-separator {
       display: none;
+    }
+
+    .scope-meta {
+      margin-top: 0.3rem;
+      padding-top: 0.25rem;
+      border-top: 0;
+      color: rgba(184, 192, 212, 0.8);
+      font-size: 0.88rem;
+      line-height: 1.55;
     }
 
     .contact-row {

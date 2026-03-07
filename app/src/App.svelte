@@ -723,7 +723,6 @@
     display: inline-flex;
     align-items: center;
     position: relative;
-    max-width: 100%;
     padding: 0.45rem 0.75rem 0.45rem 0.65rem;
     margin: -0.45rem -0.75rem -0.45rem -0.65rem;
     border: 0;

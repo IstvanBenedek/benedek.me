@@ -631,7 +631,7 @@
               <a
                 class="button button-secondary"
                 href="https://x.com/IstvanBenedek"
-                data-haptic="light"
+                data-haptic="medium"
                 target="_blank"
                 rel="noreferrer"
               >
@@ -652,7 +652,7 @@
             <a
               class="social-card x"
               href="https://x.com/IstvanBenedek"
-              data-haptic="selection"
+              data-haptic="medium"
               target="_blank"
               rel="noreferrer"
             >
@@ -670,7 +670,7 @@
             <a
               class="social-card linkedin"
               href="https://www.linkedin.com/in/istvan-benedek/"
-              data-haptic="selection"
+              data-haptic="medium"
               target="_blank"
               rel="noreferrer"
             >
@@ -688,7 +688,7 @@
             <a
               class="social-card instagram"
               href="https://www.instagram.com/istvanbenedek/"
-              data-haptic="selection"
+              data-haptic="medium"
               target="_blank"
               rel="noreferrer"
             >
@@ -709,10 +709,31 @@
     <script type="module">
       const interactiveElements = [...document.querySelectorAll("[data-haptic]")];
       const releaseEvents = ["pointerup", "pointercancel", "pointerleave", "blur"];
+      const fallbackDurations = {
+        light: 12,
+        medium: 22,
+        heavy: 32,
+        success: [18, 28, 18],
+        warning: [28, 42, 28],
+        error: [36, 52, 36],
+        selection: 10,
+      };
+      let triggerHaptic = (type) => {
+        const pattern = fallbackDurations[type] ?? fallbackDurations.medium;
+        if (navigator.vibrate) {
+          navigator.vibrate(pattern);
+        }
+      };
+
+      const fireHaptic = (element) => {
+        const type = element.dataset.haptic || "medium";
+        triggerHaptic(type);
+      };
 
       for (const element of interactiveElements) {
         element.addEventListener("pointerdown", () => {
           element.classList.add("is-pressed");
+          fireHaptic(element);
         });
 
         for (const eventName of releaseEvents) {
@@ -720,21 +741,28 @@
             element.classList.remove("is-pressed");
           });
         }
+
+        element.addEventListener("keydown", (event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            fireHaptic(element);
+          }
+        });
       }
 
       (async () => {
         try {
           const { WebHaptics } = await import("https://esm.sh/web-haptics@0.0.6");
           const haptics = new WebHaptics();
+          const isSupported = WebHaptics.isSupported;
 
-          document.documentElement.dataset.haptics = WebHaptics.isSupported
+          document.documentElement.dataset.haptics = isSupported
             ? "supported"
             : "unavailable";
 
-          for (const element of interactiveElements) {
-            element.addEventListener("click", () => {
-              void haptics.trigger(element.dataset.haptic || "light");
-            });
+          if (isSupported) {
+            triggerHaptic = (type) => {
+              void haptics.trigger(type);
+            };
           }
 
           window.addEventListener(

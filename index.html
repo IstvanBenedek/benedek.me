@@ -230,6 +230,7 @@
       }
 
       .button {
+        position: relative;
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -241,6 +242,9 @@
         text-decoration: none;
         font-weight: 700;
         touch-action: manipulation;
+        overflow: hidden;
+        isolation: isolate;
+        will-change: transform;
         transition:
           transform 180ms ease,
           background-color 180ms ease,
@@ -255,6 +259,10 @@
 
       .button.is-pressed {
         transform: translateY(1px) scale(0.985);
+      }
+
+      .button.is-firing {
+        border-color: rgba(255, 255, 255, 0.26);
       }
 
       .button:focus-visible,
@@ -272,6 +280,10 @@
       .button-primary:hover,
       .button-primary:focus-visible {
         box-shadow: 0 18px 36px rgba(245, 158, 11, 0.32);
+      }
+
+      .button-primary.is-firing {
+        box-shadow: 0 20px 42px rgba(245, 158, 11, 0.42);
       }
 
       .button-secondary {
@@ -311,6 +323,9 @@
         border-radius: var(--radius-lg);
         text-decoration: none;
         touch-action: manipulation;
+        overflow: hidden;
+        isolation: isolate;
+        will-change: transform;
         background:
           linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 28%),
           rgba(255, 255, 255, 0.04);
@@ -331,6 +346,49 @@
 
       .social-card.is-pressed {
         transform: translateY(-1px) scale(0.988);
+      }
+
+      .social-card.is-firing {
+        border-color: rgba(255, 255, 255, 0.24);
+        box-shadow: 0 18px 36px rgba(3, 8, 20, 0.24);
+      }
+
+      .button > .button-label,
+      .social-card > *:not(.press-visual) {
+        position: relative;
+        z-index: 1;
+      }
+
+      .press-visual {
+        position: absolute;
+        left: var(--press-x, 50%);
+        top: var(--press-y, 50%);
+        width: 11rem;
+        height: 11rem;
+        border-radius: 999px;
+        pointer-events: none;
+        z-index: 0;
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.18);
+        background:
+          radial-gradient(
+            circle,
+            rgba(255, 255, 255, 0.52) 0%,
+            rgba(255, 255, 255, 0.18) 18%,
+            rgba(255, 215, 154, 0.24) 42%,
+            rgba(245, 158, 11, 0) 72%
+          );
+        filter: blur(1px);
+      }
+
+      .social-card .press-visual {
+        width: 15rem;
+        height: 15rem;
+      }
+
+      .button.is-firing .press-visual,
+      .social-card.is-firing .press-visual {
+        animation: press-visual 460ms cubic-bezier(0.16, 1, 0.3, 1);
       }
 
       .social-card::after {
@@ -595,6 +653,22 @@
             box-shadow: 0 0 0 0.4rem rgba(245, 158, 11, 0.06);
           }
         }
+
+        @keyframes press-visual {
+          0% {
+            opacity: 0.82;
+            transform: translate(-50%, -50%) scale(0.14);
+          }
+
+          58% {
+            opacity: 0.26;
+          }
+
+          100% {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(1);
+          }
+        }
       }
     </style>
   </head>
@@ -622,7 +696,7 @@
                 target="_blank"
                 rel="noreferrer"
               >
-                Connect on LinkedIn
+                <span class="button-label">Connect on LinkedIn</span>
               </a>
               <a
                 class="button button-secondary"
@@ -631,7 +705,7 @@
                 target="_blank"
                 rel="noreferrer"
               >
-                Follow on X
+                <span class="button-label">Follow on X</span>
               </a>
             </div>
           </div>
@@ -705,6 +779,7 @@
     <script type="module">
       const interactiveElements = [...document.querySelectorAll("[data-haptic]")];
       const releaseEvents = ["pointerup", "pointercancel", "pointerleave", "blur"];
+      const visualDuration = 460;
       const fallbackDurations = {
         light: 12,
         medium: 22,
@@ -720,6 +795,46 @@
           navigator.vibrate(pattern);
         }
       };
+      const visualTimers = new WeakMap();
+
+      const ensurePressVisual = (element) => {
+        let visual = element.querySelector(".press-visual");
+        if (!visual) {
+          visual = document.createElement("span");
+          visual.className = "press-visual";
+          visual.setAttribute("aria-hidden", "true");
+          element.append(visual);
+        }
+        return visual;
+      };
+
+      const setPressOrigin = (element, clientX, clientY) => {
+        const rect = element.getBoundingClientRect();
+        const x = clientX == null ? rect.width / 2 : clientX - rect.left;
+        const y = clientY == null ? rect.height / 2 : clientY - rect.top;
+        element.style.setProperty("--press-x", `${x}px`);
+        element.style.setProperty("--press-y", `${y}px`);
+      };
+
+      const playPressVisual = (element, clientX, clientY) => {
+        ensurePressVisual(element);
+        setPressOrigin(element, clientX, clientY);
+        element.classList.remove("is-firing");
+        void element.offsetWidth;
+        element.classList.add("is-firing");
+
+        const existingTimer = visualTimers.get(element);
+        if (existingTimer) {
+          window.clearTimeout(existingTimer);
+        }
+
+        const timer = window.setTimeout(() => {
+          element.classList.remove("is-firing");
+          visualTimers.delete(element);
+        }, visualDuration);
+
+        visualTimers.set(element, timer);
+      };
 
       const fireHaptic = (element) => {
         const type = element.dataset.haptic || "medium";
@@ -727,8 +842,15 @@
       };
 
       for (const element of interactiveElements) {
-        element.addEventListener("pointerdown", () => {
+        ensurePressVisual(element);
+
+        element.addEventListener("pointerdown", (event) => {
+          if (event.pointerType === "mouse" && event.button !== 0) {
+            return;
+          }
+
           element.classList.add("is-pressed");
+          playPressVisual(element, event.clientX, event.clientY);
           fireHaptic(element);
         });
 
@@ -739,7 +861,8 @@
         }
 
         element.addEventListener("keydown", (event) => {
-          if (event.key === "Enter" || event.key === " ") {
+          if ((event.key === "Enter" || event.key === " ") && !event.repeat) {
+            playPressVisual(element);
             fireHaptic(element);
           }
         });

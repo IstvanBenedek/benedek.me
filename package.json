@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "check:security": "node scripts/prebuild-checks.mjs",
-    "build:app": "node scripts/prebuild-checks.mjs && vite build",
+    "build:app": "node scripts/prebuild-checks.mjs && vite build && vite build --ssr src/entry-server.js --outDir ../.svelte-dist-ssr && node scripts/prerender.mjs",
     "build": "npm run build:app && node scripts/publish-root.mjs",
     "preview": "vite preview"
   },

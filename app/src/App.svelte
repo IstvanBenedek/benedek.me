@@ -2,36 +2,13 @@
   import { onMount } from "svelte";
   import { WebHaptics } from "./lib/web-haptics.mjs";
 
-  const siteUrl = "https://benedek.me";
-  const socialImageUrl = `${siteUrl}/og-preview.png`;
-  const metaDescription =
-    "Security leader, hands-on builder, and AI/security automation architect across Level 1 payment environments, PCI delivery, and Kubernetes-native Rust platforms.";
-
   const cards = [
     {
       href: "https://www.linkedin.com/in/istvan-benedek/",
-      label: "LinkedIn",
+      label: "LinkedIn profile",
+      mobileLabel: "Open LinkedIn profile",
     },
   ];
-  const personSchema = JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "Person",
-    name: "Istvan Benedek",
-    url: siteUrl,
-    jobTitle: "Security Leader and AI Security Automation Architect",
-    sameAs: ["https://www.linkedin.com/in/istvan-benedek/"],
-    knowsAbout: [
-      "Software Development",
-      "Application Security",
-      "Threat Modeling",
-      "Security Automation",
-      "PCI DSS",
-      "PCI PIN",
-      "PCI MPoC",
-      "Cryptography",
-      "Kubernetes",
-    ],
-  });
   const focusAreas = [
     "AI-driven security automation",
     "Custom security tooling and assessments",
@@ -74,8 +51,14 @@
     const activeTimers = new Set();
     const cleanup = [];
     const haptics = new WebHaptics();
+    const canTriggerVibration =
+      () => !("userActivation" in navigator) || navigator.userActivation?.isActive;
 
     let triggerHaptic = (type) => {
+      if (!canTriggerVibration()) {
+        return;
+      }
+
       const pattern = fallbackDurations[type] ?? fallbackDurations.medium;
       if (navigator.vibrate) {
         navigator.vibrate(pattern);
@@ -142,6 +125,10 @@
 
     if (isSupported) {
       triggerHaptic = (type) => {
+        if (!canTriggerVibration()) {
+          return;
+        }
+
         void haptics.trigger(type);
       };
     }
@@ -194,37 +181,6 @@
     };
   });
 </script>
-
-<svelte:head>
-  <title>Istvan Benedek | Security Leadership, PCI, and AI Security Automation</title>
-  <meta name="description" content={metaDescription} />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#f3ede2" />
-  <link rel="canonical" href={siteUrl} />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content={siteUrl} />
-  <meta property="og:site_name" content="Istvan Benedek" />
-  <meta
-    property="og:title"
-    content="Istvan Benedek | Security Leadership, PCI, and AI Security Automation"
-  />
-  <meta property="og:description" content={metaDescription} />
-  <meta property="og:image" content={socialImageUrl} />
-  <meta property="og:image:type" content="image/png" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="Istvan Benedek professional landing page preview" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta
-    name="twitter:title"
-    content="Istvan Benedek | Security Leadership, PCI, and AI Security Automation"
-  />
-  <meta name="twitter:description" content={metaDescription} />
-  <meta name="twitter:image" content={socialImageUrl} />
-  <meta name="twitter:image:alt" content="Istvan Benedek professional landing page preview" />
-  <script type="application/ld+json">{personSchema}</script>
-</svelte:head>
 
 <main class="page">
   <div class="shell">
@@ -289,10 +245,15 @@
             class="connect-link contact-link"
             href={card.href}
             data-haptic="medium"
+            aria-label={card.mobileLabel}
             target="_blank"
             rel="noreferrer"
           >
-            <span class="connect-link-label">{card.label}</span>
+            <span class="connect-link-label connect-link-label-desktop">{card.label}</span>
+            <span class="connect-link-label connect-link-label-mobile">
+              {card.mobileLabel}
+              <span aria-hidden="true">↗</span>
+            </span>
           </a>
         {/each}
         <span class="contact-divider" aria-hidden="true"></span>
@@ -602,6 +563,7 @@
     position: relative;
     display: inline-flex;
     align-items: center;
+    min-height: 2.75rem;
     text-decoration: none;
     color: inherit;
     overflow: hidden;
@@ -687,6 +649,10 @@
   .connect-link-label {
     position: relative;
     z-index: 1;
+  }
+
+  .connect-link-label-mobile {
+    display: none;
   }
 
   .contact-divider {
@@ -850,11 +816,40 @@
 
     .contact-row {
       grid-template-columns: 1fr;
-      gap: 0.35rem;
+      gap: 0.55rem;
     }
 
     .contact-divider {
       display: none;
+    }
+
+    .contact-link {
+      width: 100%;
+      justify-content: center;
+      min-height: 3.35rem;
+      padding: 0.9rem 1rem;
+      border: 1px solid rgba(245, 158, 11, 0.2);
+      border-radius: 16px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 30%),
+        linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(255, 255, 255, 0.04));
+      box-shadow: 0 12px 28px rgba(3, 8, 20, 0.16);
+    }
+
+    .connect-link:hover,
+    .connect-link:focus-visible {
+      transform: none;
+      color: var(--text);
+    }
+
+    .connect-link-label-desktop {
+      display: none;
+    }
+
+    .connect-link-label-mobile {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
     }
 
     .contact-email-item {

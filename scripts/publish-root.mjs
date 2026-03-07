@@ -33,6 +33,7 @@ for (const fileName of [
   "index.html",
   "favicon.svg",
   "CNAME",
+  "google1e0d79e7738c6733.html",
   "og-preview.svg",
   "og-preview.png",
   "llms.txt",

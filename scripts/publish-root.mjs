@@ -34,6 +34,7 @@ for (const fileName of [
   "favicon.svg",
   "CNAME",
   "google1e0d79e7738c6733.html",
+  "BingSiteAuth.xml",
   "og-preview.svg",
   "og-preview.png",
   "llms.txt",

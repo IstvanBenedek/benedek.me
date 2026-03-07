@@ -1,0 +1,107 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="108" y1="42" x2="1084" y2="612" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0B1220" />
+      <stop offset="0.52" stop-color="#121826" />
+      <stop offset="1" stop-color="#1F2A44" />
+    </linearGradient>
+    <radialGradient id="glowA" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(210 70) rotate(48.2) scale(256.169 279.255)">
+      <stop stop-color="#F59E0B" stop-opacity="0.36" />
+      <stop offset="1" stop-color="#F59E0B" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="glowB" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1020 118) rotate(128.974) scale(255.706 233.329)">
+      <stop stop-color="#3B82F6" stop-opacity="0.34" />
+      <stop offset="1" stop-color="#3B82F6" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <rect width="1200" height="630" fill="url(#glowA)" />
+  <rect width="1200" height="630" fill="url(#glowB)" />
+
+  <g opacity="0.16">
+    <path d="M0 72H1200" stroke="white" />
+    <path d="M0 144H1200" stroke="white" />
+    <path d="M0 216H1200" stroke="white" />
+    <path d="M0 288H1200" stroke="white" />
+    <path d="M0 360H1200" stroke="white" />
+    <path d="M0 432H1200" stroke="white" />
+    <path d="M0 504H1200" stroke="white" />
+    <path d="M0 576H1200" stroke="white" />
+    <path d="M72 0V630" stroke="white" />
+    <path d="M144 0V630" stroke="white" />
+    <path d="M216 0V630" stroke="white" />
+    <path d="M288 0V630" stroke="white" />
+    <path d="M360 0V630" stroke="white" />
+    <path d="M432 0V630" stroke="white" />
+    <path d="M504 0V630" stroke="white" />
+    <path d="M576 0V630" stroke="white" />
+    <path d="M648 0V630" stroke="white" />
+    <path d="M720 0V630" stroke="white" />
+    <path d="M792 0V630" stroke="white" />
+    <path d="M864 0V630" stroke="white" />
+    <path d="M936 0V630" stroke="white" />
+    <path d="M1008 0V630" stroke="white" />
+    <path d="M1080 0V630" stroke="white" />
+    <path d="M1152 0V630" stroke="white" />
+  </g>
+
+  <rect x="70" y="54" width="1060" height="522" rx="34" fill="#0A0F19" fill-opacity="0.68" stroke="#FFFFFF" stroke-opacity="0.14" />
+  <path d="M70 124H1130" stroke="white" stroke-opacity="0.1" />
+
+  <circle cx="110" cy="90" r="24" fill="#FFFFFF" fill-opacity="0.06" stroke="#FFFFFF" stroke-opacity="0.14" />
+  <text x="96" y="97" fill="#FFD79A" font-family="SFMono-Regular, IBM Plex Mono, Menlo, Monaco, monospace" font-size="18" font-weight="700">IB</text>
+  <text x="154" y="97" fill="#B8C0D4" font-family="SFMono-Regular, IBM Plex Mono, Menlo, Monaco, monospace" font-size="14" font-weight="600" letter-spacing="0.16em">ISTVAN BENEDEK</text>
+
+  <rect x="104" y="156" width="228" height="42" rx="21" fill="#FFFFFF" fill-opacity="0.04" stroke="#FFFFFF" stroke-opacity="0.1" />
+  <circle cx="132" cy="177" r="6" fill="#FFD79A" />
+  <text x="154" y="184" fill="#FFD79A" font-family="SFMono-Regular, IBM Plex Mono, Menlo, Monaco, monospace" font-size="14" font-weight="700" letter-spacing="0.14em">SECURITY LEADERSHIP</text>
+
+  <text x="104" y="282" fill="#F8F2E7" font-family="Iowan Old Style, Palatino Linotype, Book Antiqua, Georgia, serif" font-size="82" font-weight="700">Istvan</text>
+  <text x="104" y="394" fill="#F8F2E7" font-family="Iowan Old Style, Palatino Linotype, Book Antiqua, Georgia, serif" font-size="82" font-weight="700">Benedek</text>
+
+  <text x="104" y="450" fill="#FFD79A" font-family="Avenir Next, Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="26" font-weight="600">
+    Security leader, hands-on builder, and AI/security automation architect.
+  </text>
+  <text x="104" y="500" fill="#F8F2E7" font-family="Iowan Old Style, Palatino Linotype, Book Antiqua, Georgia, serif" font-size="31" font-weight="600">
+    Builds security systems, automation, and AI-driven workflows that let
+  </text>
+  <text x="104" y="538" fill="#F8F2E7" font-family="Iowan Old Style, Palatino Linotype, Book Antiqua, Georgia, serif" font-size="31" font-weight="600">
+    organizations run security work at scale instead of treating it as overhead.
+  </text>
+
+  <text x="700" y="162" fill="#FFD79A" font-family="SFMono-Regular, IBM Plex Mono, Menlo, Monaco, monospace" font-size="15" font-weight="700" letter-spacing="0.14em">REPRESENTATIVE SCOPE</text>
+
+  <rect x="700" y="184" width="346" height="116" rx="20" fill="url(#glowA)" fill-opacity="0.18" stroke="#F59E0B" stroke-opacity="0.28" />
+  <rect x="700" y="184" width="346" height="116" rx="20" fill="#FFFFFF" fill-opacity="0.05" />
+  <text x="722" y="232" fill="#FFD79A" font-family="Iowan Old Style, Palatino Linotype, Book Antiqua, Georgia, serif" font-size="28" font-weight="700">Built from scratch</text>
+  <text x="722" y="270" fill="#F8F2E7" font-family="Avenir Next, Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="19" font-weight="500">
+    Security functions and audit capability designed
+  </text>
+  <text x="722" y="297" fill="#F8F2E7" font-family="Avenir Next, Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="19" font-weight="500">
+    and delivered from the ground up.
+  </text>
+
+  <rect x="700" y="320" width="166" height="114" rx="18" fill="#FFFFFF" fill-opacity="0.04" stroke="#F59E0B" stroke-opacity="0.18" />
+  <rect x="882" y="320" width="164" height="114" rx="18" fill="#FFFFFF" fill-opacity="0.04" stroke="#FFFFFF" stroke-opacity="0.1" />
+  <text x="720" y="362" fill="#FFD79A" font-family="Avenir Next, Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="24" font-weight="700">Level 1 delivery</text>
+  <text x="720" y="394" fill="#B8C0D4" font-family="Avenir Next, Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="18" font-weight="500">PCI DSS, PCI PIN, and</text>
+  <text x="720" y="420" fill="#B8C0D4" font-family="Avenir Next, Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="18" font-weight="500">PCI MPoC in payments.</text>
+  <text x="902" y="362" fill="#F8F2E7" font-family="Avenir Next, Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="24" font-weight="700">Built for scale</text>
+  <text x="902" y="394" fill="#B8C0D4" font-family="Avenir Next, Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="18" font-weight="500">Automation and AI-assisted</text>
+  <text x="902" y="420" fill="#B8C0D4" font-family="Avenir Next, Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="18" font-weight="500">workflows for large estates.</text>
+
+  <path d="M700 462H1048" stroke="white" stroke-opacity="0.12" />
+  <text x="700" y="488" fill="#FFD79A" fill-opacity="0.72" font-family="SFMono-Regular, IBM Plex Mono, Menlo, Monaco, monospace" font-size="12" font-weight="700" letter-spacing="0.12em">OPERATING SCOPE</text>
+  <text x="700" y="515" fill="#F8F2E7" fill-opacity="0.9" font-family="Avenir Next, Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="17" font-weight="500">
+    Built security functions, audit programs, and secure SDLC capability for
+  </text>
+  <text x="700" y="539" fill="#F8F2E7" fill-opacity="0.9" font-family="Avenir Next, Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="17" font-weight="500">
+    Level 1 payment environments, regulated platforms, and large engineering estates.
+  </text>
+
+  <rect x="104" y="548" width="460" height="18" rx="9" fill="#FFFFFF" fill-opacity="0.06" />
+  <rect x="582" y="548" width="464" height="18" rx="9" fill="#FFFFFF" fill-opacity="0.06" />
+  <text x="284" y="561" fill="#FFD79A" font-family="SFMono-Regular, IBM Plex Mono, Menlo, Monaco, monospace" font-size="12" font-weight="700" letter-spacing="0.14em">LINKEDIN</text>
+  <text x="696" y="561" fill="#FFD79A" font-family="SFMono-Regular, IBM Plex Mono, Menlo, Monaco, monospace" font-size="12" font-weight="500">istvan.benedek.job [at] gmail [dot] com</text>
+</svg>

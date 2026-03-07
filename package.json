@@ -1,0 +1,18 @@
+{
+  "name": "benedek-me",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "check:security": "node scripts/prebuild-checks.mjs",
+    "build:app": "node scripts/prebuild-checks.mjs && vite build",
+    "build": "npm run build:app && node scripts/publish-root.mjs",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^6.2.4",
+    "svelte": "^5.53.7",
+    "vite": "^7.3.1"
+  }
+}

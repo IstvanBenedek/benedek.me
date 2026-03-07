@@ -1,0 +1,4 @@
+node_modules/
+.svelte-dist/
+.svelte-dist-ssr/
+assets/

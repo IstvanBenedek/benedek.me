@@ -212,7 +212,7 @@
             Representative scope
           </h2>
           <ul class="outcome-grid">
-            {#each outcomes as point}
+            {#each outcomes as point (point.value)}
               <li
                 class:proof-card--featured={point.featured}
                 class:proof-card--accent={point.accent}
@@ -236,7 +236,7 @@
         <div class="capability-stack" aria-label="What I do">
           <h2 class="capability-kicker">What I do</h2>
           <ul class="focus-strip" aria-label="Capabilities">
-            {#each focusAreas as area}
+            {#each focusAreas as area (area)}
               <li class="focus-pill">{area}</li>
             {/each}
           </ul>
@@ -246,7 +246,7 @@
 
     <section class="links" aria-label="Contact">
       <div class="contact-row">
-        {#each cards as card}
+        {#each cards as card (card.href)}
           <a
             class="connect-link contact-link"
             href={card.href}

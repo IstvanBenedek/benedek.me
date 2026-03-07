@@ -35,6 +35,8 @@ for (const fileName of [
   "CNAME",
   "og-preview.svg",
   "og-preview.png",
+  "llms.txt",
+  "llm.txt",
   "robots.txt",
   "sitemap.xml",
 ]) {

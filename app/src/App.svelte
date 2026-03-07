@@ -5,7 +5,7 @@
   const siteUrl = "https://benedek.me";
   const socialImageUrl = `${siteUrl}/og-preview.png`;
   const metaDescription =
-    "Security leader, hands-on builder, and AI/security automation architect across Level 1 payments, PCI, and large-scale engineering environments.";
+    "Security leader, hands-on builder, and AI/security automation architect across Level 1 payment environments, PCI delivery, and Kubernetes-native Rust platforms.";
 
   const cards = [
     {
@@ -196,7 +196,7 @@
 </script>
 
 <svelte:head>
-  <title>Istvan Benedek | Security Leadership</title>
+  <title>Istvan Benedek | Security Leadership, PCI, and AI Security Automation</title>
   <meta name="description" content={metaDescription} />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#f3ede2" />
@@ -204,7 +204,11 @@
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content={siteUrl} />
-  <meta property="og:title" content="Istvan Benedek | Security Leadership" />
+  <meta property="og:site_name" content="Istvan Benedek" />
+  <meta
+    property="og:title"
+    content="Istvan Benedek | Security Leadership, PCI, and AI Security Automation"
+  />
   <meta property="og:description" content={metaDescription} />
   <meta property="og:image" content={socialImageUrl} />
   <meta property="og:image:type" content="image/png" />
@@ -212,7 +216,10 @@
   <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content="Istvan Benedek professional landing page preview" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Istvan Benedek | Security Leadership" />
+  <meta
+    name="twitter:title"
+    content="Istvan Benedek | Security Leadership, PCI, and AI Security Automation"
+  />
   <meta name="twitter:description" content={metaDescription} />
   <meta name="twitter:image" content={socialImageUrl} />
   <meta name="twitter:image:alt" content="Istvan Benedek professional landing page preview" />
@@ -237,14 +244,15 @@
             I bring 26 years across software development, application security,
             incident and crisis management, and compliance, including Level 1 PCI
             DSS, PCI PIN, PCI MPoC, and ISO work in payment environments. I build
-            security tooling from scratch and design deterministic AI-assisted
-            workflows that let secure SDLC work run reliably at scale.
+            security tooling from scratch, including Kubernetes-native Rust
+            platforms and deterministic AI-assisted workflows that let secure
+            SDLC work run reliably at scale.
           </p>
         </div>
       </div>
       <div class="hero-side">
         <div class="outcome-stack" aria-label="Representative scope">
-          <p class="capability-kicker capability-kicker-primary">Representative scope</p>
+          <h2 class="capability-kicker capability-kicker-primary">Representative scope</h2>
           <div class="outcome-grid">
             {#each outcomes as point}
             <div class:proof-card--featured={point.featured} class:proof-card--accent={point.accent} class="proof-card">
@@ -264,7 +272,7 @@
           </p>
         </div>
         <div class="capability-stack" aria-label="What I do">
-          <p class="capability-kicker">What I do</p>
+          <h2 class="capability-kicker">What I do</h2>
           <div class="focus-strip" aria-label="Capabilities">
             {#each focusAreas as area}
               <span class="focus-pill">{area}</span>

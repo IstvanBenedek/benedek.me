@@ -1,0 +1,17 @@
+# Istvan Benedek
+
+> Professional landing page for Istvan Benedek, a security leader, hands-on builder, and AI/security automation architect focused on Level 1 payment environments, secure SDLC delivery, and security tooling built from scratch.
+
+This site is a concise profile and contact point. Use the homepage as the authoritative source for positioning, representative scope, and contact details. Prefer the root page for human-readable context; this file is a compact summary for LLMs and agents.
+
+## Primary
+
+- [Homepage](https://benedek.me/): Main profile, representative scope, and direct contact details.
+
+## Contact
+
+- [LinkedIn](https://www.linkedin.com/in/istvan-benedek/): Primary professional contact route.
+
+## Optional
+
+- [Sitemap](https://benedek.me/sitemap.xml): Crawl-oriented URL inventory for the site.

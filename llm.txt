@@ -1,0 +1,7 @@
+# llm.txt compatibility pointer
+
+> The canonical machine-readable summary for this site lives at /llms.txt.
+
+## Primary
+
+- [Canonical llms.txt](https://benedek.me/llms.txt): Preferred LLM-oriented site summary.

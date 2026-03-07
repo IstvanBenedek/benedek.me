@@ -948,13 +948,14 @@
     }
 
     .contact-email-item {
-      justify-self: start;
+      justify-self: center;
       width: 100%;
     }
 
     .contact-email {
       width: 100%;
-      text-align: left;
+      text-align: center;
+      justify-content: center;
     }
   }
 

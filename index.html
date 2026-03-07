@@ -172,13 +172,14 @@
       .hero {
         position: relative;
         display: grid;
-        grid-template-columns: minmax(0, 1.3fr) minmax(18rem, 0.9fr);
-        gap: 1.5rem;
+        grid-template-columns: 1fr;
+        gap: 1rem;
         padding: 4.25rem 1.25rem 1.25rem;
       }
 
       .hero-copy {
         padding: 0.5rem 0.25rem 0.75rem;
+        max-width: 42rem;
       }
 
       .eyebrow {
@@ -219,15 +220,6 @@
         color: var(--muted);
         font-size: 1.08rem;
         line-height: 1.75;
-      }
-
-      .lede {
-        margin: 0 0 1rem;
-        color: var(--accent-soft);
-        font-family: var(--serif);
-        font-size: clamp(1.35rem, 2.5vw, 1.8rem);
-        line-height: 1.25;
-        letter-spacing: -0.03em;
       }
 
       .hero-actions {
@@ -288,63 +280,12 @@
         color: var(--text);
       }
 
-      .hero-panel {
-        position: relative;
-        align-self: end;
-        padding: 1.3rem;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: var(--radius-xl);
-        background:
-          linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 28%),
-          var(--panel-strong);
-      }
-
-      .hero-panel::before {
-        content: "";
-        position: absolute;
-        inset: 1rem;
-        border-radius: calc(var(--radius-xl) - 10px);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        pointer-events: none;
-      }
-
-      .panel-label {
-        margin: 0 0 0.8rem;
-        color: var(--accent-soft);
-        font-family: var(--mono);
-        font-size: 0.78rem;
-        letter-spacing: 0.14em;
-        text-transform: uppercase;
-      }
-
-      .panel-copy {
-        margin: 0;
-        color: var(--text);
-        font-family: var(--serif);
-        font-size: 1.35rem;
-        line-height: 1.45;
-      }
-
-      .panel-copy span {
-        color: var(--accent-soft);
-      }
-
-      .panel-note {
-        margin: 1.1rem 0 0;
-        color: var(--muted);
-        line-height: 1.7;
-      }
-
       .links {
         padding: 0 1.25rem 1.25rem;
       }
 
       .section-head {
-        display: flex;
-        align-items: end;
-        justify-content: space-between;
-        gap: 1rem;
-        margin: 1rem 0 1.1rem;
+        margin: 0 0 1.1rem;
       }
 
       .section-title {
@@ -352,13 +293,6 @@
         font-family: var(--serif);
         font-size: clamp(1.8rem, 4vw, 2.5rem);
         letter-spacing: -0.04em;
-      }
-
-      .section-copy {
-        margin: 0;
-        max-width: 32rem;
-        color: var(--muted);
-        line-height: 1.7;
       }
 
       .social-grid {
@@ -465,30 +399,8 @@
         background: linear-gradient(135deg, rgba(249, 115, 22, 0.28), rgba(236, 72, 153, 0.24));
       }
 
-      .footer {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 1rem;
-        padding: 1.35rem 1.25rem 1.6rem;
-        color: var(--muted);
-        font-size: 0.95rem;
-      }
-
-      .footer-note {
-        margin: 0;
-      }
-
-      .footer-mark {
-        font-family: var(--mono);
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        color: rgba(255, 255, 255, 0.5);
-      }
-
       @media (max-width: 900px) {
         .hero {
-          grid-template-columns: 1fr;
           padding-top: 3.25rem;
         }
 
@@ -525,15 +437,12 @@
 
         .nav,
         .hero,
-        .links,
-        .footer {
+        .links {
           padding-left: 1rem;
           padding-right: 1rem;
         }
 
-        .nav,
-        .section-head,
-        .footer {
+        .nav {
           align-items: start;
           flex-direction: column;
         }
@@ -575,14 +484,7 @@
           line-height: 0.94;
         }
 
-        .lede {
-          margin-bottom: 0.85rem;
-          font-size: 1.22rem;
-        }
-
         .intro,
-        .section-copy,
-        .panel-note,
         .social-description {
           font-size: 1rem;
           line-height: 1.65;
@@ -597,22 +499,8 @@
           min-height: 3.5rem;
         }
 
-        .hero-panel {
-          padding: 1.05rem;
-          border-radius: 24px;
-        }
-
-        .hero-panel::before {
-          inset: 0.8rem;
-          border-radius: 16px;
-        }
-
-        .panel-copy {
-          font-size: 1.2rem;
-        }
-
         .section-head {
-          margin-top: 0.5rem;
+          margin-top: 0;
         }
 
         .section-title {
@@ -643,14 +531,6 @@
         .social-handle {
           font-size: 1.35rem;
         }
-
-        .footer {
-          padding-top: 1rem;
-        }
-
-        .footer-note {
-          max-width: 24rem;
-        }
       }
 
       @media (max-width: 420px) {
@@ -660,8 +540,7 @@
 
         .nav,
         .hero,
-        .links,
-        .footer {
+        .links {
           padding-left: 0.85rem;
           padding-right: 0.85rem;
         }
@@ -678,25 +557,20 @@
 
       @media (prefers-reduced-motion: no-preference) {
         .hero-copy,
-        .hero-panel,
         .social-card {
           animation: fade-up 700ms ease backwards;
         }
 
-        .hero-panel {
+        .social-card:nth-child(1) {
           animation-delay: 90ms;
         }
 
-        .social-card:nth-child(1) {
-          animation-delay: 140ms;
-        }
-
         .social-card:nth-child(2) {
-          animation-delay: 220ms;
+          animation-delay: 170ms;
         }
 
         .social-card:nth-child(3) {
-          animation-delay: 300ms;
+          animation-delay: 250ms;
         }
 
         @keyframes fade-up {
@@ -739,7 +613,6 @@
           <div class="hero-copy">
             <div class="eyebrow">Personal Site</div>
             <h1>Istvan Benedek</h1>
-            <p class="lede">A cleaner place to say hello.</p>
             <p class="intro">
               Thanks for stopping by. This page stays intentionally simple:
               one short introduction, a calm visual layer, and a few places to
@@ -766,29 +639,12 @@
               </a>
             </div>
           </div>
-
-          <aside class="hero-panel">
-            <p class="panel-label">Small but Intentional</p>
-            <p class="panel-copy">
-              A minimal homepage can still feel <span>sharp</span>, warm, and
-              unmistakably personal.
-            </p>
-            <p class="panel-note">
-              The goal here is not to say everything. It is to make the first
-              impression feel considered, then point people to the channels that
-              already matter.
-            </p>
-          </aside>
         </section>
 
         <section class="links" aria-labelledby="connect-title">
           <div class="section-head">
             <div>
               <h2 class="section-title" id="connect-title">Where to find me</h2>
-              <p class="section-copy">
-                Pick the platform that fits the conversation best. Professional,
-                social, or somewhere in between.
-              </p>
             </div>
           </div>
 
@@ -848,11 +704,6 @@
             </a>
           </div>
         </section>
-
-        <footer class="footer">
-          <p class="footer-note">Small footprint, a little more polish.</p>
-          <span class="footer-mark">ib</span>
-        </footer>
       </div>
     </main>
     <script type="module">

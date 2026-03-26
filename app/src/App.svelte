@@ -627,7 +627,11 @@
     border-radius: 999px;
     background:
       linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent 34%),
-      linear-gradient(135deg, rgba(245, 158, 11, 0.08), rgba(255, 255, 255, 0.02));
+      linear-gradient(
+        135deg,
+        rgba(245, 158, 11, 0.08),
+        rgba(255, 255, 255, 0.02)
+      );
     text-decoration: none;
     color: inherit;
     overflow: hidden;
